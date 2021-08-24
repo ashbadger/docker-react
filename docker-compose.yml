@@ -13,7 +13,7 @@ services:
       - /usr/src/app/node_modules
       # We can use ".:", which is similar to using `$(pwd):` that we used with Docker CLI
       - .:/usr/src/app
-  test-runner:
+  test:
     stdin_open: true
     build:
       context: .
