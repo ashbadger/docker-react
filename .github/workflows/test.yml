@@ -1,0 +1,25 @@
+name: 'Run Tests'
+
+on: push
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    env:
+      COMPOSE_FILE: docker-compose.dev.yml
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Create `.env` file for Docker Compose CLI
+      run: |
+        touch .env
+        echo CI=true >> .env
+
+    - name: Build docker images
+      run: docker-compose build
+
+    - name: Run tests
+      run: docker-compose run test

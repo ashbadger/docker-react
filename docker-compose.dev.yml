@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  web:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      # use container's node modules, not our local machine's node modules
+      - /usr/src/app/node_modules
+      # We can use ".:", which is similar to using `$(pwd):` that we used with Docker CLI
+      - .:/usr/src/app
+  test:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /usr/src/app/node_modules
+      - .:/usr/src/app   
+    command: ["npm", "run", "test"]
